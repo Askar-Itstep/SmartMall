@@ -1,0 +1,124 @@
+--create database MySmallMart
+--use MySmallMart
+--create table Roles(
+--id int identity(1,1) primary key,
+--name_role nvarchar(50) not null,
+--)
+--insert into Roles values
+--('Manager'), ('Employee'), ('Customer')
+----select* from Roles
+-----------------------------------------------------------------------------------------------------
+--create table Customers(
+--id int identity(1,1) primary key,
+--fullname_customer nvarchar(50) not null,
+--age_custom int not null check( age_custom between 18 and 100),
+--login_custom nvarchar(50) not null,
+--password_custom nvarchar(50) not null,
+--role_id int constraint fk_Customers_roles foreign key 
+--	references Roles(id) check (role_id = 3),
+--address text,	
+--phoneNum nvarchar(20))
+
+--insert into Customers values
+--('Иванов Иван', 23, 'ivan_i@yandex.ru', 'ivan7013892614', 3, 'Almaty st.Masanchi, 12-23 050000 Kazakhstan', '8701-389-2614'),
+--('Петров Петр', 25, 'petr_p@yandex.ru', 'petr123', 3, 'Karagandy Bukhar-Gyrau st., 27-41 100000 Kazakhstan', '8705-145-17-18'),
+--('Сидоров Сидор', 22, 'sydor@mail.ru', '525sydor', 3, 'Temirtau Metallurgov st., 42-56 101000 Kazakhstan', '8702-565-1474'),
+--('Ахмедов Ахмед', 32, 'ahmed@yandex.ru', 'shah_ahmed1', 3, 'Karagandy Gogolya st., 41-99 100000 Kazakhstan', '8708-415-8565'),
+--('Ильдияр Турсунов', 28, 'ilya_dar@gmail.com', 'ilyaDar777', 3, 'Pavlodar Mira st., 65-141 140015 Kazakhstan', '8-700-745-6214'),
+--('Manukyan LTD', 23, 'manu_many@yandex.ru', '$many_khan', 3, 'Astana Imanova st., 32-78 010000 Kazakhstan', '8-777-475-25-78')
+-----------------------------------------------------------------------------------------------------
+--create table Employees(
+--id int identity(1,1) primary key,
+--fullname_emp nvarchar(50) not null,
+--age_emp int not null check( age_emp between 18 and 65),
+--login_emp nvarchar(50) not null,
+--password_emp nvarchar(50) not null,
+--role_id int constraint fk_Employees_roles foreign key 
+--	references Roles(id) check (role_id < 3))
+
+--insert into Employees values
+--('Чингагчкук Моисеевич', 45, 'chingo@yahoo.com', 'chingo45', 1),
+--('Инга Вахтангова', 36, 'inga@mail.ru', 'inga36', 2),
+--('Ильясов Равшан', 32, 'gumshud@yandex.ru', 'guma123456', 2)
+
+----------------------------------------------------------------------------------------------------
+--create table Products(
+--id int identity(1,1) primary key,
+--name_prod nvarchar(150) not null,
+--manufactur nvarchar(50),
+--model nvarchar(50),
+--imagePath nvarchar(200),
+--quantity_on_storage int,
+--purch_price money not null,
+--price money)
+ 
+--insert into Products values
+--('ноутбук Apple Macbook Air13', 'Apple', 'Macbook Air13 MQD32RU/A', 'Image\MacAir13.png', 4, 325680, 429690),
+--('ноутбук Xiaomi Notebook Pro 15,6'' 256GB ', 'Xiaomi', 'Notebook Pro 15,6'' 256GB (JYU4035CN)', 'Image\Xiaomi_MI_NOTEBOOK_PRO.png', 6, 2956500, 399990 ),
+--('ультрабук Acer SWIFT 7 BLACK', 'Acer', 'SWIFT 7 BLACK (NX.GN2ER.001)', 'Image\Ultrabook_ACER_SWIFT_7_BLACK.png', 5, 280540, 369990),
+--('ноутбук HP 13-AH0035UR', 'HP', '13-AH0035UR (4RQ54EA)', 'Image\Notebook_HP_13-AH0035UR.png', 4, 288260, 379990),
+--('LED монитор Samsung LС27F591FDI', 'Samsung', 'LС27F591FDI', 'Image\LED_monitor_SAMSUNG_LС27F591FDI.png',  5, 80740, 112290),
+--('LED монитор Samsung LS22F350FHIXCI', 'Samsung', 'LS22F350FHIXCI', 'Image\LED_monitor_SAMSUNG_LS22F350FHIXCI.png', 4, 28160, 39890),
+--('LED монитор LG 34UM69G-B', 'LG', '34UM69G-B', 'Image\LED_monitorLG_34UM69G_B.png', 4, 93750, 159990 ),
+--('моноблок Apple Imac 21.5"', 'Apple', 'Imac 21.5" MMQA2 2017', 'Image\Monoblock_APPLE_IMAC_21.5 MMQA2.png', 3, 255480, 485990),
+--('моноблок Acer Aspire C22-860', 'Acer', 'Aspire C22-860(DQ.B94MC.002)', 'Image\Monoblock_ACER_ASPIRE_C22-860.png', 5, 155320, 233990),
+--('моноблок Acer Aspire S24-880', 'Acer', 'Aspire S24-880 (DQ.BA9MC.001)', 'Image\Monoblock_ACER_ASPIRE_S24-880.png', 5, 1955120, 323990 )
+
+----select* from Products
+---------------------------------------------------------------------------------------------------
+--create table Orders(
+--id int identity(1,1) primary key,
+--custom_id int constraint fk_orders_custom foreign key 
+--	references Customers(id),
+--prod_id int constraint fk_orders_prod foreign key 
+--	references Products(id),
+--number_item int not null,
+--date_ship date not null,
+--sum_pay money not null,
+--sum_order money not null,
+--sum_debit as (sum_order-sum_pay) persisted,
+--seller_id int constraint fk_orders_emp foreign key references Employees(id))
+
+--insert into Orders
+--(custom_id, prod_id, number_item, date_ship, sum_pay, sum_order, seller_id) values
+--(3, 1, 1, '2018-09-12', 150000, (select price from Products where Products.id = 1), 2)	,
+--(4, 1, 1, '2018-09-14', 80000, (select price from Products where Products.id = 1), 2),
+--(5, 2, 1, '2018-09-17', 160000, (select price from Products where Products.id = 3), 2),
+--(6, 3, 1, '2018-09-22', 165000, (select price from Products where Products.id = 4), 3),
+--(7, 4, 1, '2018-09-25', 112290, (select price from Products where Products.id = 5), 3),
+--(8, 5, 6, '2018-09-30', 673740, (select price from Products where Products.id = 5)*6, 3)
+
+----select* from Orders
+---------------------------------------------------------------------------------------------
+--create table Debitors(
+--id int identity(1,1) primary key,
+--custom_id int constraint fk_debit_customer foreign key 
+--	references Customers(id),
+--order_id int constraint fk_debit_order foreign key 
+--	references Orders(id),
+--sum_begin_debit money,
+--new_pay money,
+--date_new_pay date,
+--current_sum_debit as (sum_begin_debit - new_pay) persisted,
+--date_plan_repay date)
+
+--insert into Debitors values
+--(3, (select id from Orders where custom_id = 3), 
+--	(select sum_debit from Orders where custom_id = 3), 50000, '2018-11-02', '2019-09-01'),
+--(4, (select id from Orders where custom_id = 4), 
+--	(select sum_debit from Orders where custom_id = 4), 50000, '2018-11-04', '2019-09-01'),
+--(5, (select id from Orders where custom_id = 5), 
+--	(select sum_debit from Orders where custom_id = 5), 40000, '2018-11-07', '2019-09-01'),
+--(6, (select id from Orders where custom_id = 6), 
+--	(select sum_debit from Orders where custom_id = 6), 35000, '2018-11-22', '2019-09-01')
+
+----select* from Debitors
+-----------------------------------------------------------------------------------------------------
+--create view StatisticSeller as
+--select emp.fullname_emp, sum(ord.number_item) as num_sell, sum(ord.sum_order) as sum_cash
+--from Employees emp
+--join Orders ord on ord.seller_id = emp.id
+--join Products prod on prod.id = ord.prod_id
+--group by emp.fullname_emp
+
+--select* from StatisticSeller 

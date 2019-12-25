@@ -1,0 +1,163 @@
+﻿<Window x:Class="SmartMall.WindowStaff"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SmartMall"
+        mc:Ignorable="d"
+         Title="WindowStaff" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+    <Grid x:Name="Model1" Background="Bisque">
+        <StackPanel>
+            <Menu x:Name="menu" HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="220">
+                <MenuItem Header="File" Click="File_Click">
+                    <MenuItem Header="New"></MenuItem>
+                </MenuItem>
+                <MenuItem Header="Edit" >
+                    <MenuItem Header="Обновить" Click="Update_Click_"></MenuItem>
+                    <MenuItem Header="Удалить" Click="Delete_Click_"></MenuItem>
+                </MenuItem>
+                <MenuItem Header="Статистика" >
+                    <MenuItem Header="Статистика продаж по товарам" Click="StatProduct_Click_"></MenuItem>
+                    <MenuItem Header="Статистика продаж по продавцам" Click="StatSeller_Click_"></MenuItem>
+                </MenuItem>
+                <MenuItem Header="Help" Click="Help_Click">
+                    <MenuItem Header="About"></MenuItem>
+                </MenuItem>
+                <MenuItem Header="Exit" Click="Exit_Click"/>
+            </Menu>
+            <TabControl TabStripPlacement="Left" FontWeight="Bold" >
+                <TabItem Name="ItemRoles">
+                    <TabItem.Header>
+                        <TextBlock Height="33">Роли</TextBlock>
+                    </TabItem.Header>
+                    <DataGrid Name="roles" ItemsSource="{Binding Roles}"  AutoGenerateColumns="False"  >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="type id" Binding="{Binding Path= id}" />
+                            <DataGridTextColumn Header="name role" Binding="{Binding Path= name_role}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+                <TabItem Name="ItemProducts">
+                    <TabItem.Header>
+                        <TextBlock Height="33">Товары</TextBlock>
+                    </TabItem.Header>
+                    <DataGrid Name="productsGrid" ItemsSource="{Binding Products}"  AutoGenerateColumns="False" >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn x:Name="num_id" Binding="{Binding Path= id}" Header="id"/>
+                            <DataGridTextColumn Binding="{Binding Path= name_prod}" Header="Название товара"/>
+                            <DataGridTextColumn Binding="{Binding Path= manufactur}" Header="Производитель"/>
+                            <DataGridTextColumn Binding="{Binding Path= model}" Header="Модель"/>
+                            <DataGridTextColumn Binding="{Binding Path= quantity_on_storage}" Header="Кол-во на складе"/>
+                            <DataGridTextColumn x:Name="purchPrice" Binding="{Binding Path= purch_price}" Header="Закупочная цена"/>
+                            <DataGridTextColumn Binding="{Binding Path= price}" Header="Цена"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+                <TabItem Name="ItemOrders">
+                    <TabItem.Header>
+                        <TextBlock Height="33">Заказы</TextBlock>
+                    </TabItem.Header>
+                    <DataGrid Name="ordersGrid" ItemsSource="{Binding Orders}"  AutoGenerateColumns="False"  >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn  Binding="{Binding Path= id}" Header="id"/>
+                            <DataGridTextColumn x:Name="customId" Binding="{Binding Path= custom_id}" Header="id заказчика"/>
+                            <DataGridTextColumn x:Name="prodId" Binding="{Binding Path= prod_id}" Header="id товара"/>
+                            <DataGridTextColumn Binding="{Binding Path= number_item}" Header="Кол-во товара"/>
+                            <DataGridTextColumn Binding="{Binding Path= date_ship}" Header="Дата отгрузки"/>
+                            <DataGridTextColumn Binding="{Binding Path= price}" Header="Цена"/>
+                            <DataGridTextColumn Binding="{Binding Path= sum_pay}" Header="Сумма платежа"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+                <TabItem Name="ItemOrdersGeneric">
+                    <TabItem.Header>
+                        <TextBlock Height="33">Заказы (сведенные)</TextBlock>
+                    </TabItem.Header>
+                    <DataGrid Name="ordersGridGeneric" ItemsSource="{Binding Orders}"  AutoGenerateColumns="False"  >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn  Binding="{Binding Path= id}" Header="id"/>
+                            <DataGridTextColumn Binding="{Binding Path= custom_fullname}" Header="ФИО заказчика"/>
+                            <DataGridTextColumn Binding="{Binding Path= prod_name}" Header="Название товара"/>
+                            <DataGridTextColumn Binding="{Binding Path= number_item}" Header="Кол-во товара"/>
+                            <DataGridTextColumn Binding="{Binding Path= date_ship}" Header="Дата отгрузки"/>
+                            <DataGridTextColumn Binding="{Binding Path= price}" Header="Цена"/>
+                            <DataGridTextColumn Binding="{Binding Path= sum_pay}" Header="Сумма платежа"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+                <TabItem Name="ItemStatOrder" >
+                    <TabItem.Header>
+                        <TextBlock Height="33">Статистика по товарам</TextBlock>
+                    </TabItem.Header>
+                    <DataGrid Name="statOrdersGrid"  AutoGenerateColumns="False"  >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn  Binding="{Binding Path= id}" Header="id товара"/>
+                            <DataGridTextColumn Binding="{Binding Path= prod_name}" Header="Название товара"/>
+                            <DataGridTextColumn Binding="{Binding Path= num_orders}" Header="Кол-во заказов"/>
+                            <DataGridTextColumn Binding="{Binding Path= num_sell_prod}" Header="Кол-во проданн. товара"/>
+                            <DataGridTextColumn Binding="{Binding Path= sum_cash}" Header="Сумма выручки"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+                <TabItem Name="ItemStatSeller" >
+                    <TabItem.Header>
+                        <TextBlock Height="33">Статистика по продавцам</TextBlock>
+                    </TabItem.Header>
+                    <DataGrid Name="statSellersGrid"  AutoGenerateColumns="False"  >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Path= fullname_emp}" Header="ФИО продавца"/>
+                            <DataGridTextColumn Binding="{Binding Path= num_sell}" Header="Кол-во проданн. товара (ед.)"/>
+                            <DataGridTextColumn Binding="{Binding Path= sum_cash}" Header="Сумма выручки"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+
+                <TabItem Name="ItemDebitors">
+                    <TabItem.Header>
+                        <TextBlock Height="33">Дебиторы</TextBlock>
+                    </TabItem.Header>
+                    <DataGrid Name="debitorsGrid" ItemsSource="{Binding Debitors}"  AutoGenerateColumns="False"  >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn  Binding="{Binding Path= id}" Header="id дебитора"/>
+                            <DataGridTextColumn  Binding="{Binding Path= custom_id}" Header="id заказчика"/>
+                            <DataGridTextColumn  Binding="{Binding Path= order_id}" Header="id заказа"/>
+                            <DataGridTextColumn Binding="{Binding Path= current_sum_debit}" Header="Текущая задолженность"/>
+                            <DataGridTextColumn Binding="{Binding Path= date_plan_repay}" Header="Дата погашения (план)"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+                <TabItem Name="ItemCustomers">
+                    <TabItem.Header>
+                        <TextBlock Height="33">Заказчики</TextBlock>
+                    </TabItem.Header>
+                    <DataGrid Name="customersGrid" ItemsSource="{Binding Customers}"  AutoGenerateColumns="False"  >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn  Binding="{Binding Path= id}" Header="id заказчика"/>
+                            <DataGridTextColumn  Binding="{Binding Path= fullname_customer}" Header="ФИО заказчика"/>
+                            <!--<DataGridTextColumn  Binding="{Binding Path= role_id}" Header="id роли"/>-->
+                            <DataGridTextColumn Binding="{Binding Path= age_custom}" Header="Возраст"/>
+                            <DataGridTextColumn Binding="{Binding Path= login_custom}" Header="login"/>
+                            <DataGridTextColumn Binding="{Binding Path=password_custom}" Header="password"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+                <TabItem Name="ItemEmployees">
+                    <TabItem.Header>
+                        <TextBlock Height="33">Работники</TextBlock>
+                    </TabItem.Header>
+                    <DataGrid Name="employeesGrid" ItemsSource="{Binding Employees}"  AutoGenerateColumns="False"  >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn  Binding="{Binding Path= id}" Header="id работника"/>
+                            <DataGridTextColumn  Binding="{Binding Path= fullname_emp}" Header="ФИО работника"/>
+                            <DataGridTextColumn  Binding="{Binding Path= role_id}" Header="id роли"/>
+                            <DataGridTextColumn Binding="{Binding Path= age_emp}" Header="Возраст"/>
+                            <DataGridTextColumn Binding="{Binding Path= login_emp}" Header="login"/>
+                            <DataGridTextColumn Binding="{Binding Path=password_emp}" Header="password"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+            </TabControl>
+        </StackPanel>
+
+    </Grid>
+</Window>

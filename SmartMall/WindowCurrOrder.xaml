@@ -1,0 +1,209 @@
+﻿<Window x:Class="SmartMall.WindowCurrOrder"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SmartMall"
+        mc:Ignorable="d"
+        Title="" SizeToContent="Height"  Width="800"  FontFamily="arial" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="StyleBox">
+            <Setter Property="Control.FontFamily" Value="Arial"/>
+            <Setter Property="Control.FontSize" Value="10"/>
+            <Setter Property="Control.VerticalAlignment" Value="Center"/>
+        </Style>
+        <DataTemplate x:Key="order_template" >
+            <StackPanel Orientation="Horizontal" Style="{StaticResource StyleBox}" >
+                <StackPanel Orientation="Horizontal" Width="400">
+                    <Image Source="{Binding Path=imagePath}" Margin="10" Height="35" Width="45" HorizontalAlignment="Left"/>
+                    <TextBlock Name="nameProd" Text="{Binding Path=name_prod}" FontSize="12" VerticalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel >
+
+                    <StackPanel Orientation="Horizontal" >
+                        <TextBlock Text="Способ доставки:" />
+                        <ComboBox Name="cmbox_Delivery" Margin="30 0 0 0" Height="15" Width="120" VerticalAlignment="Top" SelectionChanged="ComboBox_SelectionChanged">
+                            <ComboBoxItem>
+                                <TextBlock Name="dhl" Text="DHL" />
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <TextBlock Name="autho" Text="Самовывоз" />
+                            </ComboBoxItem>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Height="15">
+                        <TextBlock Text="Стоимость товара " />
+                        <TextBlock Name="SumOrder"  Margin="60 0 0 0" Text="{Binding Path=price}"/>
+                        <TextBlock Text=" тенге"/>
+                    </StackPanel>
+                    <!--<StackPanel Orientation="Horizontal" Height="15">
+                        <TextBlock Text="Стоимость доставки " />
+                        <TextBlock Name="PriceDelivery"   Margin="60 0 0 0" Text="{Binding Source=price_delivery }"/>
+                        <TextBlock Text="тенге" Margin="40 0 0 0"/>
+                    </StackPanel>-->
+                    <!--<StackPanel Orientation="Horizontal" Height="15">
+                        <TextBlock Text="Дата доставки"  />
+                        <TextBlock Name="DateDelivery"   Margin="60 0 0 0" Text="{Binding Path=date_delivery}"/>
+                    </StackPanel>-->
+                </StackPanel>
+            </StackPanel>
+            <!--<DataTemplate.Triggers>
+                <EventTrigger RoutedEvent="ComboBox.SelectionChanged">                    
+                </EventTrigger>
+            </DataTemplate.Triggers>-->
+
+        </DataTemplate>
+    </Window.Resources>
+
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition  Height="55"/>
+            <RowDefinition  Height="300"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="25"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="25"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="1" >
+            <TextBlock Text="Интернет-магазин WindUp" FontSize="18" Foreground="Blue" HorizontalAlignment="Left"/>
+            <TextBlock Text="адрес: г. Караганда, пр. Бухар-Жырау, 75, тел. 8777-111-2222" Style="{StaticResource StyleBox}"  HorizontalAlignment="Left"/>
+        </StackPanel>
+        <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Text="Оформление заказа" FontSize="16" FontFamily="arial" />
+        <Grid Grid.Column="1" Grid.Row="2" Margin="4">
+            <Border Grid.Row="2" Background="#FFE7FBED" BorderBrush="Green" BorderThickness="1"  HorizontalAlignment="Left">
+                <StackPanel>
+                    <TextBlock  Text="1. Ваш адрес доставки:" FontSize="10" FontWeight="Bold"/>
+                    <StackPanel Name="myInvoice" >
+                        <TextBlock Name="name_cust_ord" Text="{Binding Path =  fullname_customer}" FontWeight="Bold" Margin="15 0 0 0" />
+                        <TextBlock Name="adress" Text="{Binding Path= address}" FontSize="12" TextWrapping="Wrap" Margin="15 10 10 0"/>
+                        <TextBlock Name="phoneNum"  Text="{Binding Path= phoneNum}" FontSize="12" Margin="15 10 0 0" Height="15"/>
+                        <Button Name="edit_btn" Content="Редактировать" Click="Edit_btn_Click" Height="15" Width="75" FontSize="10" Background="#FFE7FBED" BorderBrush="White" HorizontalAlignment="Left" Foreground="Blue"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Grid>
+        <Grid Grid.Column="1" Grid.Row="3" Width="735" VerticalAlignment="Stretch" HorizontalAlignment="Left">
+            <StackPanel Orientation="Horizontal">
+                <Border Grid.Row="2"  BorderBrush="LightGray" BorderThickness="1"  HorizontalAlignment="Left">
+                    <StackPanel Width="730">
+                        <TextBlock Text="2. Детали заказа:" FontSize="10" FontWeight="Bold"/>
+                        <TextBlock Text="Наименование товара и описание" Margin="10 10 10 0" FontSize="10" FontWeight="Bold"  Foreground="Gray" Height="14"/>
+                        <ListBox Name="lstBoxOrder"  ItemTemplate="{StaticResource order_template}" />
+                    </StackPanel>
+                </Border>
+
+            </StackPanel>
+            <Line  Stroke="LightGray" StrokeThickness="5" X1="730" />
+        </Grid>
+        <Border Grid.Row="4" Grid.Column="1" BorderBrush="LightGray" BorderThickness="1"  HorizontalAlignment="Left">
+            <StackPanel Grid.Row="4" Grid.Column="1"  Width="730">
+                <StackPanel Orientation="Horizontal" Height="52">
+                    <StackPanel HorizontalAlignment="Left">
+                        <TextBlock Text="Оставить комментарий для продавца" FontSize="10" Foreground="Gray" />
+                        <TextBox Name="CommentBox" Text="Вы можете оставить комментарий для продавца" Foreground="Silver" Height="40" Width="350" FontSize="10" 
+                                                    TextWrapping="Wrap" MouseDoubleClick="Comment_Double_Click" />
+                        <TextBlock Text="число допустимых символов не превышает 1000 знаков" Foreground="Silver" FontSize="10"/>
+                    </StackPanel>
+                    <!--<StackPanel Width="280" HorizontalAlignment="Right">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Cтоимоcть" Height="20"  HorizontalAlignment="Right" />
+                            <TextBlock />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Общая стоимоcть заказа "  Height="20"  HorizontalAlignment="Right"/>
+                            <TextBlock Name="total_sum_order" Text="$560" HorizontalAlignment="Right" Style="{StaticResource StyleBox}"/>
+                        </StackPanel>
+                    </StackPanel>-->
+
+
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <StackPanel Grid.Row="5" Grid.Column="1" Style="{StaticResource StyleBox}">
+            <TextBlock Text="3. Способы оплаты" FontWeight="Bold"/>
+            <StackPanel>
+                <RadioButton Name="visa" IsChecked="True">
+                    <RadioButton.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Name="ImageVisa" Source="Image\Visa.png" Height="18" Width="18"/>
+                            <Image Name="ImagMasterCard" Source="Image\Master.png" Height="18" Width="18"/>
+                            <Image Name="ImageMaestro" Source="Image\Maestro.png" Height="18" Width="18"/>
+                        </StackPanel>
+                    </RadioButton.Content>
+                </RadioButton>
+
+                <Grid >
+                    <StackPanel Margin="5" Background="WhiteSmoke" VerticalAlignment="Stretch">
+                        <Label Content="Номер карты"  Margin="10 0"/>
+                        <TextBox Name="BoxNumberCard" Height="14" Width="200" HorizontalAlignment="Left" Margin="10 0" />
+                        <StackPanel Orientation="Horizontal" Margin="10 0">
+                            <Label Content="Срок действия"/>
+                            <Label Content="Код безопасности"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Width="350" HorizontalAlignment="Left" Margin="10 0">
+                            <TextBox Text="MM"  Foreground="Silver" />
+                            <Label Content="/"/>
+                            <TextBox Text="YY" Foreground="Silver" />
+                            <TextBox x:Name="BoxCodeCard" Height="18" Width="80" Margin="40 0" Foreground="Silver"/>
+                        </StackPanel>
+                        <StackPanel Margin="10 5 0 0">
+                            <Label Content="Владелец карты"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Width="350" HorizontalAlignment="Left" Margin="10 0 0 0">
+                            <TextBox Text="Имя" Foreground="Silver" Height="18" Width="100" />
+                            <TextBox Text="Фамилия" Margin="10 0" Foreground="Silver" Width="120" Height="18" />
+                        </StackPanel>
+                        <CheckBox Name="CheckBox_Save" Content="Сохранить карту" IsChecked="False" Height="12" Margin="10 5 0 0"/>
+                        <StackPanel Orientation="Horizontal" Width="350" HorizontalAlignment="Left" Margin="10 3 0 0">
+                            <Button Name="btn_Done" Content ="Done" Foreground="Silver" Background="White" Height="15" Width="50" />
+                            <Button Name="btn_Cancel" Content="Cancel" Margin="10 0"   Width="50" Height="15" />
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+                <RadioButton Name="rbtn_Qiwi" Margin="10 5 0 0" Height="14" Style="{StaticResource StyleBox}">
+                    <RadioButton.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="QIWI кошелек"/>
+                            <Image Source="Image\Qiwi.jpg" Height="14" Width="20"/>
+                        </StackPanel>
+                    </RadioButton.Content>
+                </RadioButton>
+                <RadioButton Name="other_pay" Margin="10 5 0 0" Height="14" Style="{StaticResource StyleBox}">
+                    <RadioButton.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Другие способы оплаты"/>
+                            <Image Source="Image\WesternUnion.png" Height="14" Width="16" Margin="5 0 0 0"/>
+                        </StackPanel>
+                    </RadioButton.Content>
+                </RadioButton>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <StackPanel>
+                    <TextBlock Text="Внимание. Оплата в интернет-магазине производится по 100% предоплате." Margin="0 30 0 0" Style ="{StaticResource StyleBox}"/>
+                    <TextBlock Text="Если Вы желаете получить рассрочку обращайтесь в офис по указанному выше адресу." Style="{StaticResource StyleBox}"/>
+                </StackPanel>
+                <StackPanel  Width="200" Margin="50 0 0 0">
+                    <StackPanel Orientation="Horizontal" >
+                        <RadioButton Content="Скидки" Height="12"/>
+                        <ComboBox Name="cmbox_discount" Text="Не использовать купоны" Width="80" Margin="10 0 10 0" />
+                        <TextBlock Name="discounts" HorizontalAlignment="Right" Text="0" FontSize="12" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" >
+                        <Label Content="Общая сумма"/>
+                        <TextBlock  Name="TotalSum" HorizontalAlignment="Right" Text="$1000" Margin="40 5 10 0" FontSize="14" FontWeight="Bold" Foreground="#FFFF5D00"/>
+                    </StackPanel>
+                    <Button Name="btn_Pay" Content="Подтвердить и оплатить" FontSize="14" Width="200" Height="20" Foreground="White" Background="#FFEE9E13" Click="Btn_Pay_Click"/>
+                </StackPanel>
+                <Button Name="btn_Back" Content="Назад" Width="60" Height="20" VerticalAlignment="Bottom" Margin="15 0" Foreground="White" Background="Green" Click="Back_Click"/>
+            </StackPanel>
+        </StackPanel>
+
+    </Grid>
+</Window>

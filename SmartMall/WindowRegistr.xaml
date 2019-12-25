@@ -1,0 +1,57 @@
+﻿<Window x:Class="SmartMall.WindowRegistr"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SmartMall"
+        mc:Ignorable="d"
+         Title="WindowRegistr" SizeToContent="Height"   Width="450" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="StyleTextBox">
+            <Setter Property ="TextBox.Height" Value="20"/>
+            <Setter Property ="TextBox.Width" Value="300"/>
+            <Setter Property="TextBox.Width" Value="300"/>
+            <Setter Property="TextBox.FontSize" Value="10"/>
+        </Style>
+    </Window.Resources>
+    <StackPanel>
+        <TextBlock Text="Интернет-магазин WindUp"  FontSize="20" FontWeight="Bold" Foreground="#FF3F57C3"/>
+        <TextBlock Text="Smarter Shopping, Better Living!"  FontSize="12" Foreground="Gray"/>
+        <Border BorderBrush="LightGray" BorderThickness="2"  HorizontalAlignment="Center" Margin="10 10 0 0">
+            <StackPanel Margin="10 10 10 10" Width="350">
+                <TextBlock Text="Create a New Account" FontSize="16"  FontWeight="Bold"/>
+            </StackPanel>
+        </Border>
+        <Border BorderBrush="LightGray" BorderThickness="2"  HorizontalAlignment="Center" Margin="10 0 0 0">
+            <StackPanel Width="350" Margin="10">
+                <TextBlock Text="Email address" />
+                <Border BorderBrush="#FFFBD6DA" BorderThickness="2"  HorizontalAlignment="Left" Margin="0 5 0 0">
+                    <TextBox Name="Box_email" Style="{StaticResource StyleTextBox}"  MouseDoubleClick="ClearBox_MouseDoubleClick" KeyDown="Box_email_KeyDown"/>
+                </Border>
+                <TextBlock Name="Pleaser" Text="Please enter a valid Email Address"  Width="304" HorizontalAlignment="Left" FontSize="10"  Background="#FFF9DBDF"/>
+                <TextBlock Text="Name:" Margin="0 10 0 0" />
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Name="FirstName" Text="First Name"  Width="145" Style="{StaticResource StyleTextBox}" Foreground="Gray" MouseDoubleClick="ClearBox_MouseDoubleClick" KeyDown="FullName_KeyDown"/>
+                    <TextBox Name="LastName" Text="Last Name"  Width="145" Margin="10 0 0 0" Style="{StaticResource StyleTextBox}"  Foreground="Gray" MouseDoubleClick="ClearBox_MouseDoubleClick" KeyDown="FullName_KeyDown"/>
+                </StackPanel>
+                <TextBlock Text="Create Password:" Margin="0 10 0 0"/>
+                <TextBox Name="NewPassword" Text="6-20 characters (letters or number only)" Style="{StaticResource StyleTextBox}" Foreground="Gray" HorizontalAlignment="Left" KeyDown="CreatePassword_KeyDown" MouseDoubleClick="ClearBox_MouseDoubleClick"/>
+                <TextBlock Text="Confirm Password:" Margin="0 10 0 0" />
+                <TextBox Name="ConfirmPassword" Text="Enter password again"  Foreground="Gray" Style="{StaticResource StyleTextBox}"  HorizontalAlignment="Left" MouseDoubleClick="ClearBox_MouseDoubleClick" KeyDown="ConfirmPassword_KeyDown"/>
+                <TextBlock Text="Enter the code below:" Margin="0 10 0 0" />
+                <TextBox Name="DuplicateBox" Text="Not case-sensitive" FontSize="12" Foreground="Gray" Style="{StaticResource StyleTextBox}"  HorizontalAlignment="Left" MouseDoubleClick="ClearBox_MouseDoubleClick" KeyDown="DuplicateBox_KeyDown"/>
+
+                <StackPanel Orientation="Horizontal" Margin="0 5 0 0">
+                    <Border BorderBrush="LightGray" BorderThickness="2"  HorizontalAlignment="Left" >
+                        <StackPanel Orientation="Horizontal" Width="100">
+                            <TextBlock Width="15"/>
+                            <TextBlock Name="BlockCode" Text="HlIunM" Foreground="Blue" Width="80"  />
+                        </StackPanel>
+                    </Border>
+                    <Button Name="btn_refrash" Content="Refresh the code" Background="White" Foreground="Blue" FontSize="8" BorderBrush="White"/>
+                </StackPanel>
+                <Button Name="CreateAccount" Content="Create Your Account" Margin="0 15" Height="25" Width="170" FontSize="14" FontWeight="Bold" Foreground="White" Background="Orange" HorizontalAlignment="Left" Click="CreateAccount_Click"/>
+            </StackPanel>
+        </Border>
+    </StackPanel>
+</Window>

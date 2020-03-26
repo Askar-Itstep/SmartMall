@@ -4,12 +4,15 @@ namespace SmartMall
     using System.Data.Entity;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
+    using System.Collections.Generic;
 
     public partial class Model1 : DbContext
     {
-        public Model1()
-            : base("name=Model1")
+        public Model1(): base("name=Model1")  {  }
+
+        static Model1()
         {
+            Database.SetInitializer<Model1>(new MyContextInitialize());
         }
 
         public virtual DbSet<Customers> Customers { get; set; }
@@ -96,6 +99,20 @@ namespace SmartMall
             modelBuilder.Entity<StatisticSeller>()
                 .Property(e => e.sum_cash)
                 .HasPrecision(19, 4);
+        }
+
+        private class MyContextInitialize : DropCreateDatabaseAlways<Model1>
+        {
+            override
+            protected void Seed(Model1 context)
+            {
+                List<Roles> roles = new List<Roles>
+                {
+                    new Roles{ name_role = "manager" }, new Roles{ name_role = "employee"}, new Roles { name_role = "customer"}
+                };
+                context.Roles.AddRange(roles);
+                context.SaveChanges();
+            }
         }
     }
 }

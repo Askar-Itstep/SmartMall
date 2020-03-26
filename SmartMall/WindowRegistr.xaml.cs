@@ -143,9 +143,9 @@ namespace SmartMall
                 NewPassword.Foreground = Brushes.Red;
                 NewPassword.Text = "Длина пароля не соответствует!";
             }
-            Regex regex = new Regex("[А-Яя-яЁё]");
+            Regex regex = new Regex("[A-Za-z]");
             Match match = regex.Match(NewPassword.Text);
-            while (match.Success)
+            if (!match.Success)
             {
                 NewPassword.Foreground = Brushes.Red;
                 NewPassword.Text = "";
@@ -215,39 +215,39 @@ namespace SmartMall
             ((TextBox)sender).Text = "";
             ((TextBox)sender).Foreground = Brushes.Black;
         }
-       
+
         private void DuplicateBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key != Key.Enter) return;
             //MatchCode();
 
         }
-        
+
         private void Box_email_KeyDown(object sender, KeyEventArgs e)
         {
             //EmailValid();
         }
-       
+
 
         private void FullName_KeyDown(object sender, KeyEventArgs e)
         {
             //FullName_Valid();
         }
-        
+
         private void CreatePassword_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key != Key.Enter) return;
             //CreatePassword_valid();
         }
-        
+
         private void ConfirmPassword_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key != Key.Enter) return;
             //Password_Confirm_valid();
         }
-       
-        
-        
+
+
+
 
     }
 }
